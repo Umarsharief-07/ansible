@@ -18,18 +18,18 @@
     - { image: "ami-00bb6a80f01f03502", name: "manage-node-3" }
   register: ec2_instance
 
-- name: Set IP addresses for new EC2 instances
-  set_fact:
-    ec2_ips: "{{ ec2_instance.results | map(attribute='instances') | map('first') | map(attribute='public_ip_address') | list }}"
+# - name: Set IP addresses for new EC2 instances
+#   set_fact:
+#     ec2_ips: "{{ ec2_instance.results | map(attribute='instances') | map('first') | map(attribute='public_ip_address') | list }}"
 
-- name: Show extracted IPs (debug)
-  debug:
-    var: ec2_ips
+# - name: Show extracted IPs (debug)
+#   debug:
+#     var: ec2_ips
 
-- name: Add new EC2 instances to Ansible dynamic inventory
-  add_host:
-    name: "{{ item }}"
-    ansible_host: "{{ item }}"
-    ansible_ssh_private_key_file: /home/ubuntu/.ssh/id_rsa
-    ansible_user: "{{ 'ec2-user' if 'ec2' in item else 'debian' }}"  # Dynamically set the user based on 'ec2' in the IP or name
-  loop: "{{ ec2_ips }}"
+# - name: Add new EC2 instances to Ansible dynamic inventory
+#   add_host:
+#     name: "{{ item }}"
+#     ansible_host: "{{ item }}"
+#     ansible_ssh_private_key_file: /home/ubuntu/.ssh/id_rsa
+#     ansible_user: "{{ 'ec2-user' if 'ec2' in item else 'debian' }}"  # Dynamically set the user based on 'ec2' in the IP or name
+#   loop: "{{ ec2_ips }}"
