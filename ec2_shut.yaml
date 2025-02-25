@@ -1,0 +1,7 @@
+---
+- hosts: ec2_ips
+  become: true
+
+  tasks:
+    - name: shutdown ec2
+      ansible.builtin.command: /sbin/shutdown -t now

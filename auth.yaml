@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become: true
+  vars:
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+  tasks: 
+    - name: change permission
+      ansible.builtin.file:
+        path: /etc/ssh/sshd.config.d
+        mode: '0755'
+
+    - name: modify SSh con
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
+        regrep: '#.*'
+        line: 'PasswordAuthentication yes'
+        state: absent
+
+        
+  
